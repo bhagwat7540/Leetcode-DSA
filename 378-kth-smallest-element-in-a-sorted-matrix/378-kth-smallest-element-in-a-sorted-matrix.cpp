@@ -13,9 +13,12 @@ public:
         
 //         sort(a.begin() , a.end());
         
+        // tc-o(n2 + n2logn)
+        //sc- o(n2)
+        
 //         return a[k1-1];
-        int l = matrix[0][0];
-        int r = matrix[n-1][n-1];
+        int l = -1e9;
+        int r = 1e9;
         int ans;
         
         while(l<=r){
@@ -36,5 +39,8 @@ public:
         }
         
         return ans;
+        
+        //tc-o(n * logN * logn) better than n2
+        // sc-o(1)
     }
 };
