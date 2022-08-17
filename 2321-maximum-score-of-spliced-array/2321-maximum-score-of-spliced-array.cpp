@@ -26,16 +26,25 @@ public:
         
         ans = max(ans , sum2+maxx);
         sum=0;
-        maxx = INT_MIN;
+        int minn = INT_MAX;
         
         for(int i=0 ; i<n ; i++){
-            sum += t[i];
-            maxx = max(maxx , sum);
+            sum += temp[i];
+            minn = min(minn , sum);
             
-            sum = sum < 0 ? 0 : sum;  
+            if(sum>0) sum=0;
         }
         
-        ans = max(ans , sum1 + maxx);
+        ans = max(ans , sum1 -minn);
+        
+//         for(int i=0 ; i<n ; i++){
+//             sum += t[i];
+//             maxx = max(maxx , sum);
+            
+//             sum = sum < 0 ? 0 : sum;  
+//         }
+        
+//         ans = max(ans , sum1 + maxx);
         
         return ans;
     }
