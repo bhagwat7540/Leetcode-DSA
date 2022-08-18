@@ -1,23 +1,31 @@
 class Solution {
 public:
-    vector<vector<int>> ans;
+    set<vector<int>> s;
     
-    void f(vector<int>& nums , int i , vector<int>& yo){
+    void f(int i , vector<int>& a , vector<int>& v){
         
-        ans.push_back(yo);
-        
-        for(int ind = i ; ind<nums.size() ; ind++){
-            if(ind!=i && nums[ind] == nums[ind-1]) continue;
-            yo.push_back(nums[ind]);
-            f(nums , ind+1 , yo);
-            yo.pop_back();
+        if(i == a.size()){
+            s.insert(v);
+            return;
         }
+        
+        f(i+1 , a , v);
+        v.push_back(a[i]);
+        f(i+1 , a , v);
+        v.pop_back();
     }
     
     vector<vector<int>> subsetsWithDup(vector<int>& nums) {
+        
         sort(nums.begin() , nums.end());
-        vector<int> yo;
-        f(nums , 0 , yo);
-        return ans;    
+        vector<int> v;
+        f(0 , nums , v);
+        
+        vector<vector<int>> ans;
+        for(auto x : s){
+            ans.push_back(x);
+        }
+        
+        return ans;
     }
 };
