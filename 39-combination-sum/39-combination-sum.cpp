@@ -1,29 +1,31 @@
 class Solution {
 public:
+    
     vector<vector<int>> ans;
     
-    void f(vector<int>& a , int t , int i , vector<int>& yo){
-        
-        if(t == 0){
-            ans.push_back(yo);
-            return;
-        }
+    void f(vector<int>& a , int i , int t , vector<int>& v){
         
         if(i == a.size()) return;
         
-        f(a , t , i+1 , yo);
+        if(t == 0){
+            ans.push_back(v);
+            return;
+        }
         
-        if(t >= a[i]){
-           yo.push_back(a[i]);
-           f(a , t-a[i] , i , yo);
-           yo.pop_back(); 
+        f(a , i+1 , t , v);
+        
+        if(a[i] <= t){
+            v.push_back(a[i]);
+            f(a , i , t-a[i] , v);
+            v.pop_back();
         }
         
     }
     
     vector<vector<int>> combinationSum(vector<int>& candidates, int target) {
-        vector<int> yo;
-        f(candidates , target , 0 , yo);
+        vector<int> v;
+        f(candidates , 0 , target , v);
+        
         return ans;
     }
 };
