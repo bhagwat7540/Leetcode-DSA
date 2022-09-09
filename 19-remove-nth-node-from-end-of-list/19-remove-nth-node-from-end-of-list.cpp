@@ -10,42 +10,29 @@
  */
 class Solution {
 public:
-    
-    int findLengthOfLinkedList(ListNode *head){
-        
-        ListNode *iterator=head;
-        int length=0;
-        while(iterator!=NULL){
-            length++;
-            iterator=iterator->next;
-        }
-        
-        return length;
-    }
-    
     ListNode* removeNthFromEnd(ListNode* head, int n) {
         
+        ListNode *iterator1=head;
+        ListNode *iterator2=head;
         
-        int loop=findLengthOfLinkedList(head)-n;
-        ListNode *previous=NULL;
-        ListNode *iterator=head;
-        while(loop-->0){
-            
-            previous=iterator;
-            iterator=iterator->next;
+        while(n-->0){
+            iterator2=iterator2->next;
         }
-        
-       ListNode *next=iterator->next;
-        iterator->next=NULL;
+        ListNode *previous=NULL;
+        while(iterator2!=NULL){
+            previous=iterator1;
+            iterator1=iterator1->next;
+            iterator2=iterator2->next;
+        }
         
         if(previous==NULL){
-            return next;
+            return iterator1->next;
         }
         
-        previous->next=next;
-        
+        previous->next=iterator1->next;
         
         return head;
+        
         
         
     }
