@@ -11,28 +11,60 @@
 class Solution {
 public:
     ListNode* addTwoNumbers(ListNode* l1, ListNode* l2) {
-        int carry = 0;
+     if(l1==NULL)
+         return l2;
         
-        ListNode* dummy = new ListNode(0);
-        ListNode* curr = dummy;
+    if(l2==NULL){
+        return l1;
+    }
         
-        while(l1 || l2 || carry){
-            ListNode* temp = new ListNode(0);
+        ListNode *iterator1=l1;
+        ListNode *iterator2=l2;
+        int carry=0;
+        
+        ListNode *newHead=new ListNode(-1);
+        ListNode *tail=newHead;
+       
+        while(iterator1!=NULL&&iterator2!=NULL){
+        int  sum=(iterator1->val+iterator2->val+carry);
+            carry=sum/10;
             
-            curr->next = temp;
+            tail->next=new ListNode(sum%10);
+            tail=tail->next;
+            iterator1=iterator1->next;
+            iterator2=iterator2->next;
             
-            temp->val += l1 ? l1->val : 0;
-            temp->val += l2 ? l2->val : 0;
-            temp->val += carry ? carry : 0;
-            
-            l1 = l1 ? l1->next : NULL;
-            l2 = l2 ? l2->next : NULL;
-            carry = temp->val/10;
-            temp->val = temp->val%10;
-            
-            curr = temp;
         }
         
-        return dummy->next;
+        while(iterator1!=NULL){
+            
+            int sum=(iterator1->val+carry);
+            
+            carry=sum/10;
+            
+            tail->next=new ListNode(sum%10);
+            tail=tail->next;
+            iterator1=iterator1->next;
+        
+        }
+        
+        while(iterator2!=NULL){
+            
+            int sum=(iterator2->val+carry);
+            
+            carry=sum/10;
+            
+            tail->next=new ListNode(sum%10);
+            tail=tail->next;
+            
+            iterator2=iterator2->next;
+        }
+        
+        if(carry==1){
+            tail->next=new ListNode(1);
+        }
+        
+        return newHead->next;
+        
     }
 };
