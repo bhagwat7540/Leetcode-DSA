@@ -11,21 +11,41 @@
  */
 class Solution {
 public:
-    int ans=INT_MIN;
     
-    int f(TreeNode* root){
-        if(!root) return 0;
+    class Pair{
         
-        int lsum = max(0,f(root->left));
-        int rsum = max(0,f(root->right));
+        public:
+        int maxSoFar=-(int) 1e9;
+        int maxPathSum =-(int) 1e9;
+    };
+    
+    Pair maxPathSumUti(TreeNode *root)
+    {
+        if(root==NULL)
+        {
+            Pair base;
+            return base;
+        }
         
-        ans = max(ans , lsum + rsum + root->val);
+        if(root->left==NULL&&root->right==NULL)
+        {
+            Pair base;
+            base.maxSoFar=root->val;
+            base.maxPathSum=root->val;
+            return base;
+        }
+        Pair left=maxPathSumUti(root->left);
+        Pair right=maxPathSumUti(root->right);
         
-        return root->val + max(lsum , rsum);
+        Pair myAns;
+        myAns.maxSoFar=max({root->val,root->val+max(left.maxPathSum,right.maxPathSum),root->val+left.maxPathSum+right.maxPathSum,left.maxSoFar,right.maxSoFar});
+        myAns.maxPathSum=max(root->val,root->val+max(left.maxPathSum,right.maxPathSum));
+        return myAns;
     }
     
     int maxPathSum(TreeNode* root) {
-        f(root);
-        return ans;
+        
+       return  maxPathSumUti(root).maxSoFar;
+        
     }
 };
